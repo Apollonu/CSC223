@@ -1,4 +1,6 @@
 import unittest
+from unittest.mock import patch
+
 from date_class import Date
 
 class TestDate(unittest.TestCase):
@@ -98,10 +100,10 @@ class TestDate(unittest.TestCase):
 
         diffyear1 = Date(2, 2, 2006)
         diffyear2 = Date(9, 10, 2003)
-        self.assertEqual(diffyear1 - diffyear2, 824)
+        self.assertEqual(diffyear1 - diffyear2, 876)
 
         same = Date(1, 1, 1990)
-        self.assertEqual(same, - same, 0)
+        self.assertEqual(same - same, 0)
 
         diffmonth1 = Date(5, 2, 2020)
         diffmonth2 = Date(4, 30, 2020)
@@ -109,7 +111,7 @@ class TestDate(unittest.TestCase):
 
         leapyear1 = Date(3, 3, 2020)
         leapyear2 = Date(2, 27, 2020)
-        self.assertEqual(leapyear1 - leapyear2, 4)
+        self.assertEqual(leapyear1 - leapyear2, 5)
 
         unsupported = Date(1, 1, 1000)
         with self.assertRaises(TypeError):
@@ -127,7 +129,7 @@ class TestDate(unittest.TestCase):
 
         month2 = Date(1, 31, 2012)
         month2.increment()
-        self.assertEqual(str(month2), "Febuary 01, 2012")
+        self.assertEqual(str(month2), "February 01, 2012")
 
         notleap = Date(2, 28, 2021)
         notleap.increment()
@@ -135,9 +137,9 @@ class TestDate(unittest.TestCase):
 
         leap = Date(2, 28, 2020)
         leap.increment()
-        self.assertEqual(str(leap), "Febuary 29, 2020")
+        self.assertEqual(str(leap), "February 29, 2020")
         leap.increment()
-        self.assertEqual(str(notleap), "March 01, 2020")
+        self.assertEqual(str(leap), "March 01, 2020")
 
         year = Date(12, 31, 1990)
         year.increment()
@@ -155,11 +157,11 @@ class TestDate(unittest.TestCase):
 
         notleap = Date(3, 1, 2021)
         notleap.decrement()
-        self.assertEqual(str(notleap), "Febuary 28, 2021")
+        self.assertEqual(str(notleap), "February 28, 2021")
 
         leap = Date(3, 1, 2020)
         leap.decrement()
-        self.assertEqual(str(leap), "Febuary 29, 2020")
+        self.assertEqual(str(leap), "February 29, 2020")
 
         year = Date(1, 1, 1991)
         year.decrement()
@@ -167,31 +169,31 @@ class TestDate(unittest.TestCase):
 
     def test_format(self):
         self.assertEqual(str(Date(4, 18, 2018)), "April 18, 2018")
-        self.assertEqual(str(Date(2, 29, 2020)), "Febuary 29, 2020")
-        self.assertEqual(str(Date(1, 1, 1991)), "January 1, 1991")
+        self.assertEqual(str(Date(2, 29, 2020)), "February 29, 2020")
+        self.assertEqual(str(Date(1, 1, 1991)), "January 01, 1991")
 
     @patch("builtins.input", side_effect=["4", "18", "2018"])
-    def test_from_input_creates_date(self, mock_input):
+    def test_input_valid(self, mock_input):
         result = Date.from_input()
         self.assertEqual((result.month, result.day, result.year), (4, 18, 2018))
 
     @patch("builtins.input", side_effect=["December", "1", "2020"])
-    def test_from_input_creates_date(self, mock_input):
+    def test_input_nonnumeric(self, mock_input):
         with self.assertRaises(ValueError):
             result = Date.from_input()
 
     @patch("builtins.input", side_effect=["13", "1", "2020"])
-    def test_from_input_creates_date(self, mock_input):
+    def test_input_month(self, mock_input):
         with self.assertRaises(ValueError):
             result = Date.from_input()
 
     @patch("builtins.input", side_effect=["12", "32", "2020"])
-    def test_from_input_creates_date(self, mock_input):
+    def test_input_day(self, mock_input):
         with self.assertRaises(ValueError):
             result = Date.from_input()
 
     @patch("builtins.input", side_effect=["2", "29", "2021"])
-    def test_from_input_creates_date(self, mock_input):
+    def test_input_leap(self, mock_input):
         with self.assertRaises(ValueError):
             result = Date.from_input()
 

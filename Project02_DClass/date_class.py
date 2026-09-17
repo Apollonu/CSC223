@@ -63,13 +63,13 @@ class Date:
         return NotImplemented
 
     def __str__(self) -> str:
-        return self.__date.strftime("%B, %d, %Y")
+        return self.__date.strftime("%B %d, %Y")
 
     def increment(self) -> "Date":
         self.__date += timedelta(days=1)
         return self
     def decrement(self) -> "Date":
-        self.__date -+ timedelta(days=1)
+        self.__date -= timedelta(days=1)
         return self
 
     @classmethod
