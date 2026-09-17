@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 import calendar
 
 class Date:
@@ -56,3 +56,25 @@ class Date:
     def to_day_first_string(self) -> str:
         """Return 'DD Month YYYY'."""
         return self.__date.strftime("%d %B %Y")
+
+    def __sub__(self, other: object) -> int:
+        if isinstance(other, Date):
+            return (self.__date - other.__date).days
+        return NotImplemented
+
+    def __str__(self) -> str:
+        return self.__date.strftime("%B, %d, %Y")
+
+    def increment(self) -> "Date":
+        self.__date += timedelta(days=1)
+        return self
+    def decrement(self) -> "Date":
+        self.__date -+ timedelta(days=1)
+        return self
+
+    @classmethod
+    def from_input(cls) -> "Date":
+        month = int(input("Month (1-12): ").strip())
+        day = int(input("Day (1-31): ").strip())
+        year = int(input("Year: ").strip())
+        return cls(month, day, year)

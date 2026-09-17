@@ -90,5 +90,111 @@ class TestDate(unittest.TestCase):
 
         self.assertEqual(Date(1, 1, 1111).to_day_first_string(), "01 January 1111")
 
+    def test_subtraction(self):
+        apr1 = Date(4, 18, 2014)
+        apr2 = Date(4, 10, 2014)
+        self.assertEqual(apr1 - apr2, 8)
+        self.assertEqual(apr2 - apr1, -8)
+
+        diffyear1 = Date(2, 2, 2006)
+        diffyear2 = Date(9, 10, 2003)
+        self.assertEqual(diffyear1 - diffyear2, 824)
+
+        same = Date(1, 1, 1990)
+        self.assertEqual(same, - same, 0)
+
+        diffmonth1 = Date(5, 2, 2020)
+        diffmonth2 = Date(4, 30, 2020)
+        self.assertEqual(diffmonth1 - diffmonth2, 2)
+
+        leapyear1 = Date(3, 3, 2020)
+        leapyear2 = Date(2, 27, 2020)
+        self.assertEqual(leapyear1 - leapyear2, 4)
+
+        unsupported = Date(1, 1, 1000)
+        with self.assertRaises(TypeError):
+            error = Date(unsupported) - 1
+
+    def test_increment(self):
+        normal = Date(1, 1, 2012)
+        inc_normal = normal.increment()
+        self.assertIs(inc_normal, normal)
+        self.assertEqual(str(normal), "January 02, 2012")
+
+        month1 = Date(4, 30, 2012)
+        month1.increment()
+        self.assertEqual(str(month1), "May 01, 2012")
+
+        month2 = Date(1, 31, 2012)
+        month2.increment()
+        self.assertEqual(str(month2), "Febuary 01, 2012")
+
+        notleap = Date(2, 28, 2021)
+        notleap.increment()
+        self.assertEqual(str(notleap), "March 01, 2021")
+
+        leap = Date(2, 28, 2020)
+        leap.increment()
+        self.assertEqual(str(leap), "Febuary 29, 2020")
+        leap.increment()
+        self.assertEqual(str(notleap), "March 01, 2020")
+
+        year = Date(12, 31, 1990)
+        year.increment()
+        self.assertEqual(str(year), "January 01, 1991")
+
+    def test_decrement(self):
+        normal = Date(1, 2, 2012)
+        dec_normal = normal.decrement()
+        self.assertIs(dec_normal, normal)
+        self.assertEqual(str(normal), "January 01, 2012")
+
+        month1 = Date(5, 1, 2012)
+        month1.decrement()
+        self.assertEqual(str(month1), "April 30, 2012")
+
+        notleap = Date(3, 1, 2021)
+        notleap.decrement()
+        self.assertEqual(str(notleap), "Febuary 28, 2021")
+
+        leap = Date(3, 1, 2020)
+        leap.decrement()
+        self.assertEqual(str(leap), "Febuary 29, 2020")
+
+        year = Date(1, 1, 1991)
+        year.decrement()
+        self.assertEqual(str(year), "December 31, 1990")
+
+    def test_format(self):
+        self.assertEqual(str(Date(4, 18, 2018)), "April 18, 2018")
+        self.assertEqual(str(Date(2, 29, 2020)), "Febuary 29, 2020")
+        self.assertEqual(str(Date(1, 1, 1991)), "January 1, 1991")
+
+    @patch("builtins.input", side_effect=["4", "18", "2018"])
+    def test_from_input_creates_date(self, mock_input):
+        result = Date.from_input()
+        self.assertEqual((result.month, result.day, result.year), (4, 18, 2018))
+
+    @patch("builtins.input", side_effect=["December", "1", "2020"])
+    def test_from_input_creates_date(self, mock_input):
+        with self.assertRaises(ValueError):
+            result = Date.from_input()
+
+    @patch("builtins.input", side_effect=["13", "1", "2020"])
+    def test_from_input_creates_date(self, mock_input):
+        with self.assertRaises(ValueError):
+            result = Date.from_input()
+
+    @patch("builtins.input", side_effect=["12", "32", "2020"])
+    def test_from_input_creates_date(self, mock_input):
+        with self.assertRaises(ValueError):
+            result = Date.from_input()
+
+    @patch("builtins.input", side_effect=["2", "29", "2021"])
+    def test_from_input_creates_date(self, mock_input):
+        with self.assertRaises(ValueError):
+            result = Date.from_input()
+
+
 if __name__ == "__main__":
     unittest.main()
