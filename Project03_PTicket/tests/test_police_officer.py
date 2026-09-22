@@ -1,16 +1,16 @@
 import unittest
-from ..police_officer import PoliceOfficer
-from ..parked_car import ParkedCar
-from ..parking_meter import ParkingMeter
-from ..parking_ticket import ParkingTicket
+from police_officer import PoliceOfficer
+from parked_car import ParkedCar
+from parking_meter import ParkingMeter
+from parking_ticket import ParkingTicket
 
 class TestPoliceOfficer(unittest.TestCase):
-    def prep(self):
+    def setUp(self):
         self.officer = PoliceOfficer("Sgt. Guy", "12345")
 
     def test_no_ticket(self):
-        car = ParkedCar("Toyota", "Tundra", "Gray", "123-123", 35)
-        meter = ParkingMeter(30)
+        car = ParkedCar("Toyota", "Tundra", "Gray", "123-123", 30)
+        meter = ParkingMeter(35)
         self.assertIsNone(self.officer.inspection(car, meter))
     def test_exact_ticket(self):
         car = ParkedCar("Toyota", "Tundra", "Gray", "123-123", 60)
@@ -18,7 +18,7 @@ class TestPoliceOfficer(unittest.TestCase):
         self.assertIsNone(self.officer.inspection(car, meter))
 
     def test_ticket(self):
-        car = ParkedCar("Toyota", "Tundra", "Gray", "123-123", "65")
+        car = ParkedCar("Toyota", "Tundra", "Gray", "123-123", 65)
         meter = ParkingMeter(60)
         inspection = self.officer.inspection(car, meter)
 
