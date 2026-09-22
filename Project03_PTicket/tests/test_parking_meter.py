@@ -1,5 +1,5 @@
 import unittest
-from ..parking_meter import ParkingMeter
+from parking_meter import ParkingMeter
 
 class TestParkingMeter(unittest.TestCase):
     def test_construction(self):
@@ -13,7 +13,7 @@ class TestParkingMeter(unittest.TestCase):
         self.assertEqual(meter.time, 65)
 
     def test_invalids(self):
-        with self.assertRaises(TypeError):
+        with self.assertRaises(ValueError):
             ParkingMeter(-5)
         with self.assertRaises(TypeError):
             ParkingMeter(5.5)
