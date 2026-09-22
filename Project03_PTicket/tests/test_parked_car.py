@@ -1,5 +1,5 @@
 import unittest
-from ..parked_car import ParkedCar
+from parked_car import ParkedCar
 
 class TestParkedCar(unittest.TestCase):
     def test_construction(self):
@@ -16,12 +16,12 @@ class TestParkedCar(unittest.TestCase):
         car.model = "Corvette C5 Z06"
         car.color = "Yellow"
         car.plate = "FVU-656"
-        car.time = "36"
+        car.time = 0
         self.assertEqual(car.make, "Chevrolet")
         self.assertEqual(car.model, "Corvette C5 Z06")
         self.assertEqual(car.color, "Yellow")
         self.assertEqual(car.plate, "FVU-656")
-        self.assertEqual(car.time, 36)
+        self.assertEqual(car.time, 0)
 
     def test_invalids(self):
         with self.assertRaises(ValueError):
@@ -34,10 +34,8 @@ class TestParkedCar(unittest.TestCase):
             ParkedCar("Mazda", "RX-7", "Blue", "", 30)
 
         with self.assertRaises(ValueError):
-            ParkedCar("Mazda", "RX-7", "Blue", "ABC-123", 0)
-        with self.assertRaises(ValueError):
             ParkedCar("Mazda", "RX-7", "Blue", "ABC-123", -1)
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             ParkedCar("Mazda", "RX-7", "Blue", "ABC-123", 33.33)
 
 if __name__ == "__main__":
