@@ -3,6 +3,11 @@ from parking_meter import ParkingMeter
 from police_officer import PoliceOfficer
 
 def main():
+    """
+        A demo for a simulation of a car parked at a meter with an inspecting officer
+        Decides if a ticket needs to be given
+        If so supplies a ticket with the required information
+    """
     car = ParkedCar("Toyota", "Tundra", "Gray", "123-123", 60)
     meter = ParkingMeter(60)
     officer = PoliceOfficer("Sgt. Guy", "12345")

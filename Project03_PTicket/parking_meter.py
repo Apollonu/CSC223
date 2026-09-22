@@ -1,7 +1,9 @@
 class ParkingMeter:
+    """A parking meter that tracks the time purchased"""
     def __init__(self, time: int):
         self.time = time
 
+    """Validates the purchased minuates and sets its value"""
     @property
     def time(self) -> int:
         return self._time
