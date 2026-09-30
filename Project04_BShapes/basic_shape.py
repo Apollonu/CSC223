@@ -1,12 +1,18 @@
 from abc import ABC, abstractmethod
 
 class BasicShape(ABC):
+    """
+        Defines the interface for all given shapes
+        Subclasses use a calc_area() to give area calculations
+    """
     def __init__(self, name: str) -> None:
+        """Initializes a BasicShape"""
         self.name = name
         self._area = 0.0
 
     @property
     def name(self) -> str:
+        """Returns the shape's name, validates it is a string and not empty"""
         return self._name
     @name.setter
     def name(self, value: str) -> None:
@@ -18,6 +24,7 @@ class BasicShape(ABC):
 
     @property
     def area(self) -> float:
+        """Returns a read-only area value"""
         return self._area
 
     @abstractmethod

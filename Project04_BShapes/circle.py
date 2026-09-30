@@ -2,6 +2,10 @@ import math
 from basic_shape import BasicShape
 
 class Circle(BasicShape):
+    """
+        Implements area calculation and inherits from BasicShape
+        Radius will automatically trigger recalculation
+    """
     def __init__(
         self,
         x: float,
@@ -9,6 +13,7 @@ class Circle(BasicShape):
         radius: float,
         name: str = "Circle"
     ) -> None:
+        """Initializes a Circle with position and radius"""
         super().__init__(name)
         self._x = x
         self._y = y
@@ -16,6 +21,7 @@ class Circle(BasicShape):
 
     @property
     def x(self) -> float:
+        """Returns the x-coordinate of the center, validates it is a number"""
         return self._x
     @x.setter
     def x(self, value):
@@ -25,6 +31,7 @@ class Circle(BasicShape):
 
     @property
     def y(self) -> float:
+        """Returns the y-coordinate of the center, validates it is a number"""
         return self._y
     @y.setter
     def y(self, value):
@@ -34,6 +41,7 @@ class Circle(BasicShape):
 
     @property
     def radius(self) -> float:
+        """Return's the circle's radius as a float, validates it is a number and positive"""
         return self._radius
     @radius.setter
     def radius(self, value):

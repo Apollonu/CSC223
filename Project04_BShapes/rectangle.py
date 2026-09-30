@@ -1,12 +1,17 @@
 from basic_shape import BasicShape
 
 class Rectangle(BasicShape):
+    """
+        Implements area calculation for a rectangle
+        Inherits from BasicShape and automatically triggers recalculation on size change
+    """
     def __init__(
         self,
         length: float,
         width: float,
         name: str = "Rectangle"
     ) -> None:
+        """Initializes a Rectangle object"""
         super().__init__(name)
         self._length = None
         self._width = None
@@ -15,6 +20,7 @@ class Rectangle(BasicShape):
 
     @property
     def length(self) -> float:
+        """Reutns the rectangle's length as a float, validates it is a number and positive"""
         return self._length
     @length.setter
     def length(self, value):
@@ -28,6 +34,7 @@ class Rectangle(BasicShape):
 
     @property
     def width(self) -> float:
+        """Reutns the rectangle's width as a float, validates it is a number and positive"""
         return self._width
     @width.setter
     def width(self, value):
