@@ -10,9 +10,9 @@ class Circle(BasicShape):
         name: str = "Circle"
     ) -> None:
         super().__init__(name)
-        self.x = x
-        self.y = y
-        self._radius = radius
+        self._x = x
+        self._y = y
+        self.radius = radius
 
     @property
     def x(self) -> float:

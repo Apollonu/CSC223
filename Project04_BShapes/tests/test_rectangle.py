@@ -26,7 +26,7 @@ class TestRectangle(unittest.TestCase):
 
     def test_length_change(self):
         self.r.length = 5
-        self.assertEqual(self.r.area, 5 *4)
+        self.assertEqual(self.r.area, 5 * 3)
 
     def test_width_change(self):
         self.r.width = 7

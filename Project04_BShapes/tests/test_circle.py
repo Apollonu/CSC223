@@ -1,6 +1,6 @@
 import unittest
 import math
-from ..circle import Circle
+from circle import Circle
 
 class TestCircle(unittest.TestCase):
     def setUp(self):
@@ -16,7 +16,7 @@ class TestCircle(unittest.TestCase):
 
     def test_validation_zero(self):
         with self.assertRaises(ValueError):
-            self.c.radius = o
+            self.c.radius = 0
 
     def test_validation_negative(self):
         with self.assertRaises(ValueError):
@@ -26,7 +26,7 @@ class TestCircle(unittest.TestCase):
         orig = self.c.area
         self.c.x = 10
         self.c.y = -4
-        self.assertEqual(original, self.c.area)
+        self.assertEqual(orig, self.c.area)
 
     def test_custom_name(self):
         self.assertEqual(self.c.name, "Circle")

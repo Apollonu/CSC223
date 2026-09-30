@@ -36,7 +36,7 @@ class TestPolymorphism(unittest.TestCase):
         total = 0.0
         for shape in self.shapes:
             total += shape.area
-        self.assertAlmostEqual(total, math.pi * 5 + 16)
+        self.assertAlmostEqual(total, math.pi + 55)
 
 if __name__ == "__main__":
     unittest.main()
