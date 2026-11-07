@@ -76,3 +76,43 @@ class infix_postfix_converter:
 
 if __name__ == "__main__":
     converter = infix_postfix_converter()
+
+    valids = [
+        ("A + B", "A B +"),
+        ("A + B * C", "A B C * +"),
+        ("( A + B ) * C", "A B + C *"),
+        ("A * B + C / D", "A B * C D / +"),
+        ("( A + B ) * ( C - D )", "A B + C D - *"),
+        ("A + B * C - D / E", "A B C * + D E / -"),
+        ("A * ( B + C ) / D", "A B C + * D /"),
+        ("( A + B * C ) / ( D - E )", "A B C * + D E - /"),
+        ("A + ( B - C ) * D", "A B C - D * +"),
+        ("( A + B * ( C - D ) ) / E", "A B C D - * + E /"),
+        ("A - B + C", "A B - C +"),
+        ("A / B * C", "A B / C *"),
+        ("(((((((( A + B ))))))))", "A B +")
+    ]
+    for valid, expect in valids:
+        result = " ".join(converter.convert{valid})
+        assert result == expect, f"{valid}: got {result}, expected {expect}"
+        print(f"[{valid}] -> [{result}]")
+
+    invalids = [
+        "A + B ) C",
+        "A + B ; C",
+        "+ A B",
+        "A + * B",
+        "A B + C",
+        "A + ) B * C (",
+        "( A + B", "A + B )",
+        "",
+        "A +"
+    ]
+    for invalid in invalids:
+        try:
+            converter.convert(invalid)
+            print(f"FAIL: [{invalid}] was accepted")
+        except ValueError as error:
+            print(f"[{invalid}] -> ERROR: {errpr}")
+
+    print ("All infix_converter tests finished")
