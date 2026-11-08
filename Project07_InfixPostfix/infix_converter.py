@@ -1,23 +1,25 @@
 from stack import stack
 
+_OPERATORS = {"+": 1, "-": 1, "*": 2, "/": 2}
+
 class infix_postfix_converter:
-    def _tokenize(self, expression)
+    def _tokenize(self, expression):
         tokens = []
         for t in expression.split():
             i = 0
-            while i < len(raw):
+            while i < len(t):
                 c = t[i]
                 if c.isalnum():
                     start = i
-                    while i < len(raw) and raw[i].isalum():
+                    while i < len(t) and t[i].isalnum():
                         i += 1
-                    tokens.append(raw[start:i])
+                    tokens.append(t[start:i])
                     continue
                 if c in _OPERATORS or c in "()":
                     tokens.append(c)
                     i += 1
                     continue
-                raise ValueError(f"invalid token '{ch}'")
+                raise ValueError(f"invalid token '{c}'")
         return tokens
 
     def convert(self, expression):
@@ -29,8 +31,8 @@ class infix_postfix_converter:
         ops = stack()
         expect_operand = True
 
-        for token in tokens
-            if token.isalum():
+        for token in tokens:
+            if token.isalnum():
                 if not expect_operand:
                     raise ValueError(f"misplaced operand '{token}'")
                 output.append(token)
@@ -93,7 +95,7 @@ if __name__ == "__main__":
         ("(((((((( A + B ))))))))", "A B +")
     ]
     for valid, expect in valids:
-        result = " ".join(converter.convert{valid})
+        result = " ".join(converter.convert(valid))
         assert result == expect, f"{valid}: got {result}, expected {expect}"
         print(f"[{valid}] -> [{result}]")
 

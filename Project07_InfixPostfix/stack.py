@@ -8,7 +8,7 @@ class stack:
     def pop(self):
         if self.is_empty():
             raise IndexError("pop from stack")
-        return self._item.pop()
+        return self._items.pop()
 
     def peek(self):
         if self.is_empty():
@@ -24,9 +24,9 @@ class stack:
 if __name__ == "__main__":
     stack = stack()
 
-    for oper in (stack.pop, sstack.peek):          # error cases first (stack empty)
+    for oper in (stack.pop, stack.peek):          # error cases first (stack empty)
         try:
-            op()
+            oper()
             print(f"FAIL: {oper.__name__} on empty stack")
         except IndexError:
             print(f"PASS: {oper.__name__} on empty stack raises IndexError")
