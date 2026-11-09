@@ -56,7 +56,7 @@ class infix_postfix_converter:
                 if expect_operand:
                     raise ValueError(f"misplaced operator '{token}'")
                 while (
-                    not ops.is_empty
+                    not ops.is_empty()
                     and ops.peek() != "("
                     and _OPERATORS[ops.peek()] >= _OPERATORS[token]
                 ):
@@ -115,6 +115,6 @@ if __name__ == "__main__":
             converter.convert(invalid)
             print(f"FAIL: [{invalid}] was accepted")
         except ValueError as error:
-            print(f"[{invalid}] -> ERROR: {errpr}")
+            print(f"[{invalid}] -> ERROR: {error}")
 
     print ("All infix_converter tests finished")

@@ -24,7 +24,7 @@ class stack:
 if __name__ == "__main__":
     stack = stack()
 
-    for oper in (stack.pop, stack.peek):          # error cases first (stack empty)
+    for oper in (stack.pop, stack.peek):
         try:
             oper()
             print(f"FAIL: {oper.__name__} on empty stack")

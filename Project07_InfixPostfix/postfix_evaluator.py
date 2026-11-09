@@ -10,29 +10,30 @@ class postfix_evaluator:
             raise ValueError("empty expression")
 
         operand = stack()
-        for token in _OPERATORS:
-            if operand.size() < 2:
-                raise ValueError(f"insuffient operands for operator '{token}'")
-            right = operand.pop()
-            left = operand.pop()
-            if token == "+":
-                result = left + right
-            elif token == "-":
-                result = left - right
-            elif token == "*":
-                result = left * right
+        for token in tokens:
+            if token in _OPERATORS:
+                if operand.size() < 2:
+                    raise ValueError(f"insuffient operands for operator '{token}'")
+                right = operand.pop()
+                left = operand.pop()
+                if token == "+":
+                    result = left + right
+                elif token == "-":
+                    result = left - right
+                elif token == "*":
+                    result = left * right
+                else:
+                    if right == 0:
+                        raise ZeroDivisionError("divided by zero")
+                    result = left / right
+                operand.push(result)
             else:
-                if right == 0:
-                    raise ZeroDivisionError("divided by zero")
-                result = left / right
-            operand.push(result)
-        else:
-            try:
-                operand.push(int(token))
-            except ValueError:
                 try:
-                    operand.push(float(token))
+                    operand.push(int(token))
                 except ValueError:
+                    try:
+                        operand.push(float(token))
+                    except ValueError:
                         raise ValueError(f"invalid token '{token}'")
 
         if operand.size() != 1:
