@@ -1,15 +1,25 @@
-from stack import stack
+from stack import Stack
 
 _OPERATORS = {"+", "-", "*", "/"}
 
-class postfix_evaluator:
+class PostfixEvaluator:
+    '''
+        Evaluates postfix expressions supporting operators in _OPERATORS
+        Uses Stack from stack.py
+    '''
     def evaluate(self, expression):
+        '''
+            Evaluate a postfix expression
+            Returns the numeric result of the expression
+            ValueError if it is invalid
+            ZeroDivisionError if it divides by zero
+        '''
         tokens = expression.split()
 
         if not tokens:
             raise ValueError("empty expression")
 
-        operand = stack()
+        operand = Stack()
         for token in tokens:
             if token in _OPERATORS:
                 if operand.size() < 2:
@@ -24,7 +34,7 @@ class postfix_evaluator:
                     result = left * right
                 else:
                     if right == 0:
-                        raise ZeroDivisionError("divided by zero")
+                        raise ZeroDivisionError("division by zero")
                     result = left / right
                 operand.push(result)
             else:
@@ -37,11 +47,11 @@ class postfix_evaluator:
                         raise ValueError(f"invalid token '{token}'")
 
         if operand.size() != 1:
-            raise ValueError("operand size too big")
+            raise ValueError("too many operands")
         return operand.pop()
 
 if __name__ == "__main__":
-    evaluator = postfix_evaluator()
+    evaluator = PostfixEvaluator()
 
     valids = [
         ("5 3 +", 8),

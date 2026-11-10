@@ -1,9 +1,19 @@
-from stack import stack
+from stack import Stack
 
 _OPERATORS = {"+": 1, "-": 1, "*": 2, "/": 2}
 
-class infix_postfix_converter:
+class InfixToPostfixConverter:
+    '''
+        Converts infix to postfix arithmetic
+        Uses Stack from stack.py
+        Supports operations from _OPERATORS
+    '''
     def _tokenize(self, expression):
+        '''
+            Splits an expression into tokens
+            Returns a list of tokens
+            ValueError if an invalid character is found
+        '''
         tokens = []
         for t in expression.split():
             i = 0
@@ -23,12 +33,17 @@ class infix_postfix_converter:
         return tokens
 
     def convert(self, expression):
+        '''
+            Converts an infix expression to a list of postfix tokens
+            Raises a ValueError for an empty expression, invalid token or mismatched operators or parentheses
+            Returns the equivalent postfix token list
+        '''
         tokens = self._tokenize(expression)
         if not tokens:
             raise ValueError("empty expression")
 
         output = []
-        ops = stack()
+        ops = Stack()
         expect_operand = True
 
         for token in tokens:
@@ -77,7 +92,7 @@ class infix_postfix_converter:
         return output
 
 if __name__ == "__main__":
-    converter = infix_postfix_converter()
+    converter = InfixToPostfixConverter()
 
     valids = [
         ("A + B", "A B +"),

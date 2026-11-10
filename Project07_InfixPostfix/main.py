@@ -1,7 +1,12 @@
-from infix_converter import infix_postfix_converter
-from postfix_evaluator import postfix_evaluator
+from infix_converter import InfixToPostfixConverter
+from postfix_evaluator import PostfixEvaluator
 
 def main():
+    '''
+        Integration stack based converts for infix to postfix with numeric expressions
+        Reports errors for improper inputs
+    '''
+    print("----- Postfix Evaluator -----")
     postfix_cases = [
         "5 3 +",
         "8 2 - 3 +",
@@ -13,11 +18,12 @@ def main():
     ]
     for expression in postfix_cases:
         try:
-            result = postfix_evaluator().evaluate(expression)
+            result = PostfixEvaluator().evaluate(expression)
             print(f"[{expression}] = {result}")
         except (ValueError, ZeroDivisionError) as error:
             print(f"[{expression}] -> ERROR: {error}")
 
+    print("\n----- Infix to Postfix Converter -----")
     infix_cases = [
         "A + B",
         "A + B * C",
@@ -27,7 +33,7 @@ def main():
         "A + B ; C",
         "A B + C"
     ]
-    converter = infix_postfix_converter()
+    converter = InfixToPostfixConverter()
     for expression in infix_cases:
         try:
             result = " ".join(converter.convert(expression))
@@ -35,6 +41,7 @@ def main():
         except (ValueError, ZeroDivisionError) as error:
             print(f"[{expression}] -> ERROR: {error}")
 
+    print("\n----- Full Pipeline: infix -> postfix -> evaluate -----")
     pipeline_cases = [
         "3 + 4 * 2",
         "( 10 - 4 ) / 3",
@@ -44,7 +51,7 @@ def main():
     for expression in pipeline_cases:
         try:
             token = converter.convert(expression)
-            result = postfix_evaluator().evaluate(" ".join(token))
+            result = PostfixEvaluator().evaluate(" ".join(token))
             postfix = " ".join(token)
             print(f"[{expression}] -> [{postfix}] = {result}")
         except (ValueError, ZeroDivisionError) as error:
