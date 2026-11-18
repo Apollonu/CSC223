@@ -25,7 +25,7 @@ def main():
             tree = BinaryExpressionTree(express)
             print(
                 f"[{express}] infix: {tree.infix()} "
-                f"postfix: {tree.postfix()} = {tree.eval()}"
+                f"postfix: {tree.postfix()} = {tree.evaluate()}"
             )
         except (ValueError, ZeroDivisionError) as error:
             print(f"[{express}] -> ERROR: {error}")
